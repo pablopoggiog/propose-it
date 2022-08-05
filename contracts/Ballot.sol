@@ -85,4 +85,24 @@ contract Ballot {
 
         emit LogVote(msg.sender, proposalId, _accepted);
     }
+
+    function getWinningProposal() public view returns (uint256) {
+        uint256 winningVoteCount;
+        uint256 winningProposalId;
+
+        for (uint256 i = 0; i < proposals.length; i++) {
+            Proposal storage proposal = proposals[i];
+            if (proposal.voteCount > winningVoteCount) {
+                winningVoteCount = proposal.voteCount;
+                winningProposalId = proposal.id;
+            }
+        }
+
+        return winningProposalId;
+    }
+
+    function getWinnerName() public view returns (string memory) {
+        uint256 winningProposalId = getWinningProposal();
+        return proposals[winningProposalId].name;
+    }
 }
