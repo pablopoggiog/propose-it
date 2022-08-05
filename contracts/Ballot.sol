@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL-3.0
 
 pragma solidity ^0.8.9;
 
@@ -40,4 +40,17 @@ contract Ballot {
             proposals[i] = proposal;
         }
     }
+
+    modifier onlyChairPerson() {
+        require(msg.sender == chairPerson);
+        _;
+    }
+
+    function giveRightToVote(address _voter) external onlyChairPerson {
+        require(voters[_voter].voted == false, "User already voted");
+        require(voters[_voter].weight == 0);
+
+        voters[_voter].weight = 1;
+    }
+    // function vote(uint256 proposalId)
 }
