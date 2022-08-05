@@ -19,4 +19,25 @@ contract Ballot {
     address public chairPerson;
     mapping(address => Voter) public voters;
     mapping(uint256 => Proposal) public proposals;
+
+    event LogVote(
+        address indexed voter,
+        uint256 indexed proposal,
+        bool accepted
+    );
+
+    constructor(bytes32[] memory proposalNames) {
+        chairPerson = msg.sender;
+
+        for (uint256 i = 0; i < proposalNames.length; i++) {
+            Proposal memory proposal = Proposal({
+                id: i,
+                name: string(abi.encodePacked(proposalNames[i])),
+                voteCount: 0,
+                accepted: false
+            });
+
+            proposals[i] = proposal;
+        }
+    }
 }
