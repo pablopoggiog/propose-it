@@ -74,4 +74,15 @@ contract Ballot {
         if (delegate.voted) proposals[delegate.vote].voteCount += voter.weight;
         else delegate.weight += voter.weight;
     }
+
+    function vote(uint256 proposalId, bool _accepted) external canVote {
+        Voter storage voter = voters[msg.sender];
+        Proposal storage proposal = proposals[proposalId];
+
+        proposal.voteCount += voter.weight;
+        voter.voted = true;
+        voter.vote = proposalId;
+
+        emit LogVote(msg.sender, proposalId, _accepted);
+    }
 }
