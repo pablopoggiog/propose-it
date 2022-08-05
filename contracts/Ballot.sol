@@ -7,6 +7,7 @@ contract Ballot {
         address voter;
         uint256 weight;
         bool voted;
+        uint256 vote;
     }
 
     struct Proposal {
@@ -47,10 +48,23 @@ contract Ballot {
     }
 
     function giveRightToVote(address _voter) external onlyChairPerson {
-        require(voters[_voter].voted == false, "User already voted");
+        require(!voters[_voter].voted, "User already voted");
         require(voters[_voter].weight == 0);
 
         voters[_voter].weight = 1;
     }
-    // function vote(uint256 proposalId)
+
+    function delegateVote(address to) external {
+        Voter storage delegate = voters[to];
+        Voter storage voter = voters[msg.sender];
+
+        require(!voter.voted, "User already voted");
+        require(voter.weight > 0, "User does not have right to vote");
+        require(to != msg.sender, "You cannot delegate to yourself");
+
+        voter.weight = 0;
+
+        if (delegate.voted) proposals[delegate.vote].voteCount += voter.weight;
+        else delegate.weight += voter.weight;
+    }
 }
