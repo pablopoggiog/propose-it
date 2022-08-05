@@ -54,12 +54,19 @@ contract Ballot {
         voters[_voter].weight = 1;
     }
 
-    function delegateVote(address to) external {
+    modifier canVote() {
+        require(!voters[msg.sender].voted, "User already voted");
+        require(
+            voters[msg.sender].weight > 0,
+            "User does not have right to vote"
+        );
+        _;
+    }
+
+    function delegateVote(address to) external canVote {
         Voter storage delegate = voters[to];
         Voter storage voter = voters[msg.sender];
 
-        require(!voter.voted, "User already voted");
-        require(voter.weight > 0, "User does not have right to vote");
         require(to != msg.sender, "You cannot delegate to yourself");
 
         voter.weight = 0;
