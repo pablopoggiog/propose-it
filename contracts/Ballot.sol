@@ -27,14 +27,14 @@ contract Ballot {
         bool accepted
     );
 
-    constructor(bytes32[] memory proposalNames) {
+    constructor(string[] memory proposalNames) {
         chairPerson = msg.sender;
 
         for (uint256 i = 0; i < proposalNames.length; i++) {
             proposals.push(
                 Proposal({
                     id: i,
-                    name: string(abi.encodePacked(proposalNames[i])),
+                    name: proposalNames[i],
                     voteCount: 0,
                     accepted: false
                 })
