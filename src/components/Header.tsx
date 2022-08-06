@@ -6,6 +6,7 @@ import {
   Menu,
   MenuList
 } from "@chakra-ui/react";
+import { ButtonWithStroke } from "src/components";
 import AnimatedLogo from "src/assets/animated-logo.gif";
 
 export const Header = () => {
@@ -20,13 +21,13 @@ export const Header = () => {
           <MenuButton as={Button}>0xwallet...address</MenuButton>
 
           <MenuList p={0}>
-            <Button w="full" py={5}>
+            <ButtonWithStroke w="full" py={5}>
               Log out
-            </Button>
+            </ButtonWithStroke>
           </MenuList>
         </Menu>
       ) : (
-        <Button>Connect Wallet</Button>
+        <ButtonWithStroke>Connect Wallet</ButtonWithStroke>
       )}
     </HStack>
   );
