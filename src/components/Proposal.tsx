@@ -19,7 +19,7 @@ export const Proposal: FC<Props> = ({ name, id, description }) => (
       <AccordionButton
         rounded="md"
         bg="teal.300"
-        _hover={{ bg: "teal.400" }}
+        _hover={{ bg: "teal.400", color: "white" }}
         _expanded={{ bg: "teal.500", color: "white" }}
       >
         <Box flex="1" textAlign="left">

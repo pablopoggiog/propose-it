@@ -28,6 +28,13 @@ const AnimatedSpline = styled(Spline)`
   animation: ${bounce} 3s ease-in-out;
 `;
 
+const CanvasContainer = styled(Flex)`
+  canvas {
+    width: 100vw !important;
+    height: auto !important;
+  }
+`;
+
 export const HomePage: FC = () => {
   return (
     <Flex
@@ -39,7 +46,7 @@ export const HomePage: FC = () => {
       pos="relative"
       bg="#f0acfc"
     >
-      <Flex
+      <CanvasContainer
         w="full"
         pos="absolute"
         top={0}
@@ -49,12 +56,8 @@ export const HomePage: FC = () => {
         zIndex={0}
         opacity={0.5}
       >
-        <AnimatedSpline
-          id="canva"
-          scene="https://prod.spline.design/qzyFOMbsVr6Wj3E9/scene.splinecode"
-          width="100vw"
-        />
-      </Flex>
+        <AnimatedSpline scene="https://prod.spline.design/qzyFOMbsVr6Wj3E9/scene.splinecode" />
+      </CanvasContainer>
       <Tabs colorScheme="teal" w="full" zIndex={1} bg="primary" opacity={0.9}>
         <TabList w="full" justifyContent="space-between">
           {topics.map(({ id, name }) => (
@@ -66,8 +69,8 @@ export const HomePage: FC = () => {
 
         <TabPanels>
           {topics.map((topic) => (
-            <TabPanel>
-              <Topic key={topic.id} {...topic} />
+            <TabPanel key={topic.id}>
+              <Topic {...topic} />
             </TabPanel>
           ))}
         </TabPanels>
